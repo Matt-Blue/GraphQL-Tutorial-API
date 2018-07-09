@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const errorHandlers = require('./handlers/errorHandlers');
+const promisify = require('es6-promisify');
+const passport = require('passport');
 
 const User = require('./models/User')
-const userRoutes = require('./routes/users');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
@@ -11,7 +13,7 @@ const app = express();
 //MIDDLEWARE//
 //////////////
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //////////

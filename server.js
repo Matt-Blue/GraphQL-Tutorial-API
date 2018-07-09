@@ -1,26 +1,20 @@
-const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+require('dotenv').config({ path: '.env' });
 
-const users = require('./routes/users');
+mongoose.connect(process.env.DATABASE);
+mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+mongoose.connection.on('error', (err) => { // Listen for errors
+  console.error(`Error: ${err.message}`);
+});
 
-const app = express();
+// Global imports
+require('./models/User');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// Start app
+const app = require('./app');
 
-const db = require('./config/keys').mongoURI;
-mongoose
-    .connect(db)
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
-
-app.get('/', (req, res) => {
-    res.send('Root');
-})
-
-app.use('/api/users', users);
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.set('port', process.env.PORT || 5000);
+const server = app.listen(app.get('port'), () => {
+  console.log(`API Running on port ${server.address().port}`);
+});
 

@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
+const validator = require('validator'); // input validator
+const mongodbErrorHandler = require('mongoose-mongodb-errors');
 
 const UserSchema = new Schema({
     name: {
@@ -12,4 +15,4 @@ const UserSchema = new Schema({
     }
 });
 
-module.exports = User = mongoose.model('users', UserSchema);
+module.exports = User = mongoose.model('User', UserSchema);

@@ -4,18 +4,15 @@ mongoose.Promise = global.Promise;
 const validator = require('validator'); // input validator
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 
-const UserSchema = new Schema({
+const CompanySchema = new Schema({
     name: {
         type: String,
         required: true
     },
-    age: {
-        type: Number,
+    description: {
+        type: String,
         required: true
-    },
-    companyId: {
-        type: String
     }
 });
 
-module.exports = User = mongoose.model('User', UserSchema);
+module.exports = Company = mongoose.model('Company', CompanySchema);
